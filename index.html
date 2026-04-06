@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Destine Recrutare</title>
+
+  <style>
+    :root{
+      --blue:#123C8C;
+      --orange:#F47A1F;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --border:#dbe3f0;
+      --green:#166534;
+      --red:#991b1b;
+      --shadow:0 10px 30px rgba(18,60,140,.08);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    .topbar{
+      background:var(--blue);
+      color:#fff;
+      padding:18px;
+    }
+
+    .topbar h1{
+      margin:0;
+      font-size:22px;
+    }
+
+    .wrap{
+      max-width:1100px;
+      margin:auto;
+      padding:16px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .title{
+      font-size:26px;
+      color:var(--blue);
+      margin:0 0 10px 0;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      line-height:1.6;
+      margin:0 0 14px 0;
+    }
+
+    .video-box{
+      background:#0f172a;
+      color:#fff;
+      border-radius:14px;
+      padding:24px;
+      text-align:center;
+      min-height:260px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .video-btn{
+      display:inline-block;
+      margin-top:15px;
+      background:#F47A1F;
+      color:#fff;
+      padding:12px 18px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:bold;
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:6px;
+      font-size:13px;
+      font-weight:700;
+      color:#334155;
+    }
+
+    input{
+      width:100%;
+      padding:11px 12px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      font-size:14px;
+    }
+
+    .btn{
+      background:var(--orange);
+      color:#fff;
+      padding:12px;
+      border-radius:10px;
+      border:none;
+      width:100%;
+      font-weight:bold;
+      cursor:pointer;
+      font-size:15px;
+    }
+
+    .btn:disabled{
+      opacity:.7;
+      cursor:not-allowed;
+    }
+
+    .msg{
+      margin-top:12px;
+      padding:12px;
+      border-radius:10px;
+      display:none;
+      line-height:1.6;
+      word-break:break-word;
+    }
+
+    .ok{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .err{
+      background:#fee2e2;
+      color:#991b1b;
+    }
+
+    .crm-link{
+      margin-top:15px;
+      padding:12px;
+      background:#fff7ed;
+      border-left:4px solid var(--orange);
+      border-radius:10px;
+      line-height:1.6;
+    }
+
+    .crm-link a{
+      color:var(--blue);
+      font-weight:bold;
+      text-decoration:none;
+    }
+
+    .note{
+      margin-top:10px;
+      font-size:12px;
+      color:#64748b;
+      line-height:1.5;
+    }
+
+    @media(max-width:768px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+
+      .title{
+        font-size:22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <h1>Destine Recrutare</h1>
+</div>
+
+<div class="wrap">
+  <div class="grid">
+
+    <div class="card">
+      <h2 class="title">De la colaborator la acționar</h2>
+      <p class="subtitle">
+        Urmărește prezentarea și completează formularul pentru a primi automat accesul la curs.
+      </p>
+
+      <div class="video-box">
+        <h3 style="margin:0 0 10px 0;">Urmărește prezentarea</h3>
+        <p style="margin:0;opacity:.95;line-height:1.6;">
+          Apasă pe buton pentru a vedea videoclipul pe Facebook.
+        </p>
+
+        <a href="https://www.facebook.com/reel/1265514348408255"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="video-btn">
+          ▶ Vezi video
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;">Înscriere rapidă</h3>
+
+      <form id="form">
+        <div class="field">
+          <label for="nume">Nume și prenume</label>
+          <input id="nume" required>
+        </div>
+
+        <div class="field">
+          <label for="telefon">Telefon</label>
+          <input id="telefon" required>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" required>
+        </div>
+
+        <div class="field">
+          <label for="oras">Oraș</label>
+          <input id="oras" required>
+        </div>
+
+        <div class="field">
+          <label for="judet">Județ</label>
+          <input id="judet" required>
+        </div>
+
+        <button class="btn" id="submitBtn" type="submit">Trimite</button>
+      </form>
+
+      <div id="msg" class="msg"></div>
+
+      <div class="note">
+        După trimitere, leadul primește automat emailul cu linkul și parola cursului.
+      </div>
+
+      <div class="crm-link">
+        CRM intern:
+        <a href="crm.html">Deschide CRM</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxHwLCz5OkPZ3RlZ7zmGpNRPIDr5qtHjFQmGrSBoYo31nUo8g0QYAVwftb4QtFQlKHxjA/exec";
+
+document.getElementById("form").addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const msg = document.getElementById("msg");
+  const btn = document.getElementById("submitBtn");
+
+  msg.className = "msg";
+  msg.style.display = "none";
+
+  const data = {
+    action: "submitLead",
+    nume: document.getElementById("nume").value.trim(),
+    telefon: document.getElementById("telefon").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    oras: document.getElementById("oras").value.trim(),
+    judet: document.getElementById("judet").value.trim(),
+    sursa: "Landing V7"
+  };
+
+  btn.disabled = true;
+  btn.textContent = "Se trimite...";
+
+  try {
+    const r = await fetch(WEB_APP_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    });
+
+    const res = await r.json();
+
+    if (res.ok) {
+      msg.className = "msg ok";
+      msg.innerHTML =
+        "<strong>Succes!</strong><br><br>" +
+        "Link: " + escapeHtml(res.linkCurs || "") + "<br>" +
+        "Parola: " + escapeHtml(res.parolaCurs || "") + "<br>" +
+        "Program: " + escapeHtml(res.ziOraCurs || "");
+      document.getElementById("form").reset();
+    } else {
+      msg.className = "msg err";
+      msg.innerText = res.error || "A apărut o eroare.";
+    }
+
+    msg.style.display = "block";
+
+  } catch (e) {
+    msg.className = "msg err";
+    msg.innerText = "Eroare conexiune.";
+    msg.style.display = "block";
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Trimite";
+  }
+});
+
+function escapeHtml(text){
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+}
+</script>
+
+</body>
+</html>

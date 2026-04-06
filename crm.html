@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Destine CRM Intern</title>
+
+  <style>
+    :root{
+      --blue:#123C8C;
+      --orange:#F47A1F;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --border:#dbe3f0;
+      --green:#166534;
+      --red:#991b1b;
+      --yellow:#92400e;
+      --shadow:0 10px 30px rgba(18,60,140,.08);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    .topbar{
+      background:var(--blue);
+      color:#fff;
+      padding:18px;
+    }
+
+    .topbar h1{
+      margin:0;
+      font-size:22px;
+    }
+
+    .wrap{
+      max-width:1240px;
+      margin:auto;
+      padding:16px;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .login-box{
+      max-width:420px;
+      margin:40px auto;
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:6px;
+      font-size:13px;
+      font-weight:700;
+      color:#334155;
+    }
+
+    input, select{
+      width:100%;
+      padding:11px 12px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      font-size:14px;
+      background:#fff;
+    }
+
+    .btn{
+      background:var(--blue);
+      color:#fff;
+      padding:12px 14px;
+      border-radius:10px;
+      border:none;
+      font-weight:bold;
+      cursor:pointer;
+      font-size:14px;
+    }
+
+    .btn.orange{background:var(--orange)}
+    .btn.gray{background:#475569}
+
+    .btn.small{
+      padding:8px 10px;
+      font-size:12px;
+      border-radius:10px;
+    }
+
+    .msg{
+      margin-top:12px;
+      padding:12px;
+      border-radius:10px;
+      display:none;
+      line-height:1.6;
+      word-break:break-word;
+    }
+
+    .ok{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .err{
+      background:#fee2e2;
+      color:#991b1b;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-bottom:16px;
+    }
+
+    .stat{
+      background:#fff;
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+
+    .stat .k{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .stat .v{
+      font-size:28px;
+      font-weight:800;
+      color:var(--blue);
+      margin-top:6px;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .toolbar input,.toolbar select{
+      width:auto;
+      min-width:180px;
+      background:#fff;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      max-height:68vh;
+      border:1px solid #e5e7eb;
+      border-radius:14px;
+      background:#fff;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:13px;
+      min-width:1100px;
+    }
+
+    th,td{
+      border-bottom:1px solid #e5e7eb;
+      padding:10px 8px;
+      text-align:left;
+      vertical-align:top;
+    }
+
+    th{
+      color:#475569;
+      background:#f8fafc;
+      position:sticky;
+      top:0;
+      z-index:1;
+      font-weight:700;
+    }
+
+    .pill{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .score-high{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .score-mid{
+      background:#fef3c7;
+      color:#92400e;
+    }
+
+    .score-low{
+      background:#fee2e2;
+      color:#991b1b;
+    }
+
+    .mobile-list{
+      display:none;
+    }
+
+    .lead-card{
+      background:#fff;
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      padding:14px;
+      margin-bottom:12px;
+    }
+
+    .lead-card h4{
+      margin:0 0 6px 0;
+      color:var(--blue);
+      font-size:18px;
+    }
+
+    .lead-meta{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .lead-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+
+    .source-list{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .source-item{
+      background:#f8fafc;
+      border-radius:12px;
+      padding:12px;
+      border:1px solid #e5e7eb;
+    }
+
+    .section-title{
+      font-size:20px;
+      font-weight:800;
+      color:var(--blue);
+      margin:0 0 12px 0;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:16px;
+    }
+
+    .dashboard-card,.crm-card{
+      grid-column:span 12;
+    }
+
+    .back-link{
+      display:inline-block;
+      margin-top:12px;
+      color:var(--blue);
+      text-decoration:none;
+      font-weight:bold;
+    }
+
+    @media (max-width: 768px){
+      .wrap{padding:12px}
+      .stats{grid-template-columns:1fr 1fr}
+      .toolbar input,.toolbar select,.toolbar button{width:100%}
+      .desktop-table{display:none}
+      .mobile-list{display:block}
+    }
+
+    @media (max-width: 480px){
+      .stats{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <h1>Destine CRM Intern</h1>
+</div>
+
+<div class="wrap">
+
+  <div id="loginView" class="card login-box">
+    <h2 class="section-title">Autentificare CRM</h2>
+
+    <div class="field">
+      <label for="crmPassword">Parolă acces</label>
+      <input type="password" id="crmPassword" placeholder="Introdu parola CRM">
+    </div>
+
+    <button class="btn orange" id="loginBtn" style="width:100%;">Intră în CRM</button>
+
+    <div id="loginMsg" class="msg"></div>
+
+    <a class="back-link" href="index.html">← Înapoi la pagina publică</a>
+  </div>
+
+  <div id="crmView" class="hidden">
+
+    <div class="stats">
+      <div class="stat">
+        <div class="k">Total leaduri</div>
+        <div class="v" id="statTotal">0</div>
+      </div>
+      <div class="stat">
+        <div class="k">Noi</div>
+        <div class="v" id="statNou">0</div>
+      </div>
+      <div class="stat">
+        <div class="k">În curs</div>
+        <div class="v" id="statInCurs">0</div>
+      </div>
+      <div class="stat">
+        <div class="k">Înscrise</div>
+        <div class="v" id="statInscris">0</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card dashboard-card">
+        <h3 class="section-title">Dashboard surse</h3>
+        <div id="sourceList" class="source-list"></div>
+      </div>
+
+      <div class="card crm-card">
+        <h3 class="section-title">Leaduri</h3>
+
+        <div class="toolbar">
+          <input type="text" id="searchInput" placeholder="Caută nume, telefon, email, oraș...">
+          <select id="statusFilter">
+            <option value="">Toate statusurile</option>
+            <option value="Nou">Nou</option>
+            <option value="Contactat">Contactat</option>
+            <option value="Follow-up">Follow-up</option>
+            <option value="În curs">În curs</option>
+            <option value="Înscris">Înscris</option>
+            <option value="Neinteresat">Neinteresat</option>
+            <option value="Respins">Respins</option>
+          </select>
+          <button class="btn" id="refreshLeadsBtn">Actualizează</button>
+          <button class="btn gray" id="logoutBtn">Ieșire</button>
+        </div>
+
+        <div class="desktop-table">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nume</th>
+                  <th>Telefon</th>
+                  <th>Email</th>
+                  <th>Oraș / Județ</th>
+                  <th>Sursă</th>
+                  <th>Status</th>
+                  <th>Follow-up</th>
+                  <th>Scor</th>
+                  <th>Acțiuni</th>
+                </tr>
+              </thead>
+              <tbody id="leadsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="mobile-list" id="mobileLeadsList"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxHwLCz5OkPZ3RlZ7zmGpNRPIDr5qtHjFQmGrSBoYo31nUo8g0QYAVwftb4QtFQlKHxjA/exec";
+const CRM_PASSWORD = "DestineCRM2026!";
+const STORAGE_KEY = "destine_crm_logged";
+let allLeads = [];
+
+document.getElementById("loginBtn").addEventListener("click", loginCRM);
+document.getElementById("logoutBtn").addEventListener("click", logoutCRM);
+document.getElementById("refreshLeadsBtn").addEventListener("click", initCRMData);
+document.getElementById("searchInput").addEventListener("input", renderLeads);
+document.getElementById("statusFilter").addEventListener("change", renderLeads);
+
+window.addEventListener("load", () => {
+  if (localStorage.getItem(STORAGE_KEY) === "1") {
+    showCRM();
+    initCRMData();
+  }
+});
+
+async function apiGet(action){
+  const res = await fetch(`${WEB_APP_URL}?action=${encodeURIComponent(action)}`);
+  return res.json();
+}
+
+async function apiPost(payload){
+  const res = await fetch(WEB_APP_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(payload)
+  });
+  return res.json();
+}
+
+function loginCRM(){
+  const pass = document.getElementById("crmPassword").value;
+  const msg = document.getElementById("loginMsg");
+
+  msg.className = "msg";
+  msg.style.display = "none";
+
+  if (pass === CRM_PASSWORD) {
+    localStorage.setItem(STORAGE_KEY, "1");
+    showCRM();
+    initCRMData();
+  } else {
+    msg.className = "msg err";
+    msg.textContent = "Parolă incorectă.";
+    msg.style.display = "block";
+  }
+}
+
+function logoutCRM(){
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById("crmView").classList.add("hidden");
+  document.getElementById("loginView").classList.remove("hidden");
+  document.getElementById("crmPassword").value = "";
+}
+
+function showCRM(){
+  document.getElementById("loginView").classList.add("hidden");
+  document.getElementById("crmView").classList.remove("hidden");
+}
+
+async function initCRMData(){
+  await loadDashboard();
+  await loadLeads();
+}
+
+async function loadLeads(){
+  try {
+    const r = await apiGet("getLeads");
+    if (!r.ok) return;
+    allLeads = r.leads || [];
+    renderLeads();
+  } catch(err){
+    console.error(err);
+  }
+}
+
+function renderLeads(){
+  const q = document.getElementById("searchInput").value.trim().toLowerCase();
+  const sf = document.getElementById("statusFilter").value;
+
+  const filtered = allLeads.filter(x => {
+    const hay = `${x.nume} ${x.telefon} ${x.email} ${x.oras} ${x.judet} ${x.sursa}`.toLowerCase();
+    const okQ = !q || hay.includes(q);
+    const okS = !sf || x.status === sf;
+    return okQ && okS;
+  });
+
+  renderDesktopTable(filtered);
+  renderMobileCards(filtered);
+}
+
+function renderDesktopTable(leads){
+  const tb = document.getElementById("leadsTableBody");
+  tb.innerHTML = "";
+
+  if (!leads.length) {
+    tb.innerHTML = `<tr><td colspan="9">Nu există leaduri pentru filtrarea curentă.</td></tr>`;
+    return;
+  }
+
+  leads.forEach(lead => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><strong>${escapeHtml(lead.nume)}</strong><br><span style="color:#6b7280">${escapeHtml(lead.id)}</span></td>
+      <td>${escapeHtml(lead.telefon)}</td>
+      <td>${escapeHtml(lead.email)}</td>
+      <td>${escapeHtml(lead.oras)} / ${escapeHtml(lead.judet)}</td>
+      <td>${escapeHtml(lead.sursa || "-")}</td>
+      <td>${statusPill(lead.status)}</td>
+      <td>${escapeHtml(lead.followUp || "-")}</td>
+      <td>${scorePill(lead.scor)}</td>
+      <td>
+        <button class="btn small" onclick="quickUpdate(${lead.row})">Editează</button>
+        <button class="btn small gray" onclick="addNote(${lead.row})">Notă</button>
+        <button class="btn small orange" onclick="resendAccess(${lead.row})">Retrimite</button>
+      </td>
+    `;
+    tb.appendChild(tr);
+  });
+}
+
+function renderMobileCards(leads){
+  const box = document.getElementById("mobileLeadsList");
+  box.innerHTML = "";
+
+  if (!leads.length) {
+    box.innerHTML = `<div class="lead-card">Nu există leaduri pentru filtrarea curentă.</div>`;
+    return;
+  }
+
+  leads.forEach(lead => {
+    const div = document.createElement("div");
+    div.className = "lead-card";
+    div.innerHTML = `
+      <h4>${escapeHtml(lead.nume)}</h4>
+      <div class="lead-meta">
+        <div><strong>Telefon:</strong> ${escapeHtml(lead.telefon)}</div>
+        <div><strong>Email:</strong> ${escapeHtml(lead.email)}</div>
+        <div><strong>Oraș / Județ:</strong> ${escapeHtml(lead.oras)} / ${escapeHtml(lead.judet)}</div>
+        <div><strong>Sursă:</strong> ${escapeHtml(lead.sursa || "-")}</div>
+        <div><strong>Status:</strong> ${statusPill(lead.status)}</div>
+        <div><strong>Follow-up:</strong> ${escapeHtml(lead.followUp || "-")}</div>
+        <div><strong>Scor:</strong> ${scorePill(lead.scor)}</div>
+      </div>
+      <div class="lead-actions">
+        <button class="btn small" onclick="quickUpdate(${lead.row})">Editează</button>
+        <button class="btn small gray" onclick="addNote(${lead.row})">Notă</button>
+        <button class="btn small orange" onclick="resendAccess(${lead.row})">Retrimite</button>
+      </div>
+    `;
+    box.appendChild(div);
+  });
+}
+
+async function quickUpdate(row){
+  const lead = allLeads.find(x => x.row === row);
+  if (!lead) return;
+
+  const status = prompt("Status", lead.status || "");
+  if (status === null) return;
+
+  const followUp = prompt("Follow-up (dd.MM.yyyy)", lead.followUp || "");
+  if (followUp === null) return;
+
+  const interes = prompt("Interes: Ridicat / Mediu / Scăzut", lead.interes || "");
+  if (interes === null) return;
+
+  const rezultat = prompt("Rezultat", lead.rezultat || "");
+  if (rezultat === null) return;
+
+  const r = await apiPost({
+    action: "updateLead",
+    row: row,
+    interes: interes,
+    status: status,
+    responsabil: lead.responsabil || "",
+    dataContact: lead.dataContact || "",
+    followUp: followUp,
+    rezultat: rezultat,
+    actiune: lead.actiune || "",
+    canal: lead.canal || ""
+  });
+
+  if (r.ok) {
+    await initCRMData();
+    alert("Lead actualizat.");
+  } else {
+    alert(r.error || "Eroare.");
+  }
+}
+
+async function addNote(row){
+  const nota = prompt("Introdu nota:");
+  if (!nota) return;
+
+  const r = await apiPost({
+    action: "addNote",
+    row: row,
+    nota: nota
+  });
+
+  if (r.ok) {
+    await loadLeads();
+    alert("Nota a fost salvată.");
+  } else {
+    alert(r.error || "Eroare.");
+  }
+}
+
+async function resendAccess(row){
+  if (!confirm("Retrimit accesul la curs?")) return;
+
+  const r = await apiPost({
+    action:"resendAccess",
+    row: row
+  });
+
+  if (r.ok) {
+    alert("Email retrimis.");
+  } else {
+    alert(r.error || "Eroare.");
+  }
+}
+
+async function loadDashboard(){
+  try {
+    const r = await apiGet("getDashboard");
+    if (!r.ok) return;
+
+    document.getElementById("statTotal").textContent = r.total || 0;
+    document.getElementById("statNou").textContent = r.nou || 0;
+    document.getElementById("statInCurs").textContent = r.inCurs || 0;
+    document.getElementById("statInscris").textContent = r.inscris || 0;
+
+    const src = document.getElementById("sourceList");
+    src.innerHTML = "";
+
+    const surse = r.surse || {};
+    const keys = Object.keys(surse).sort();
+
+    if (!keys.length) {
+      src.innerHTML = `<div class="source-item">Nu există încă surse înregistrate.</div>`;
+      return;
+    }
+
+    keys.forEach(k => {
+      const div = document.createElement("div");
+      div.className = "source-item";
+      div.innerHTML = `<strong>${escapeHtml(k)}</strong><div style="color:#6b7280">${surse[k]} leaduri</div>`;
+      src.appendChild(div);
+    });
+  } catch(err){
+    console.error(err);
+  }
+}
+
+function statusPill(status){
+  const s = String(status || "-");
+  const style = getStatusStyle(s);
+  return `<span class="pill" style="background:${style.bg};color:${style.fg};">${escapeHtml(s)}</span>`;
+}
+
+function getStatusStyle(status){
+  if(status === "Nou") return {bg:"#dbeafe", fg:"#1e3a8a"};
+  if(status === "Contactat") return {bg:"#fef3c7", fg:"#92400e"};
+  if(status === "Follow-up") return {bg:"#fde68a", fg:"#78350f"};
+  if(status === "În curs") return {bg:"#e0e7ff", fg:"#3730a3"};
+  if(status === "Înscris") return {bg:"#dcfce7", fg:"#166534"};
+  if(status === "Neinteresat") return {bg:"#fee2e2", fg:"#991b1b"};
+  if(status === "Respins") return {bg:"#f3f4f6", fg:"#374151"};
+  return {bg:"#e5e7eb", fg:"#111827"};
+}
+
+function scorePill(score){
+  const v = Number(score || 0);
+  let cls = "score-low";
+  if(v >= 85) cls = "score-high";
+  else if(v >= 60) cls = "score-mid";
+  return `<span class="pill ${cls}">${v}</span>`;
+}
+
+function escapeHtml(text){
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+}
+</script>
+
+</body>
+</html>
